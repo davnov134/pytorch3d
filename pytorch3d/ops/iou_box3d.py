@@ -10,7 +10,10 @@ from typing import Tuple
 
 import torch
 import torch.nn.functional as F
-from pytorch3d import _C
+try:
+    from pytorch3d import _C
+except ImportError:
+    _C = None
 from torch.autograd import Function
 
 

@@ -7,7 +7,10 @@
 # pyre-unsafe
 
 import torch
-from pytorch3d import _C
+try:
+    from pytorch3d import _C
+except ImportError:
+    _C = None
 
 
 # Example functions for blending the top K features per pixel using the outputs

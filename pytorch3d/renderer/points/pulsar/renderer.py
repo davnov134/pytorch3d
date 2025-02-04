@@ -18,7 +18,10 @@ import warnings
 from typing import Optional, Tuple, Union
 
 import torch
-from pytorch3d import _C
+try:
+    from pytorch3d import _C
+except ImportError:
+    _C = None
 from pytorch3d.transforms import axis_angle_to_matrix, rotation_6d_to_matrix
 
 
@@ -110,7 +113,7 @@ class _Render(torch.autograd.Function):
         opacity=None,
         percent_allowed_difference=0.01,
         # pyre-fixme[16]: Module `_C` has no attribute `MAX_UINT`.
-        max_n_hits=_C.MAX_UINT,
+        max_n_hits=_C.MAX_UINT if _C is not None else 2147483647,
         mode=0,
         return_forward_info=False,
     ) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]:
@@ -327,7 +330,7 @@ class Renderer(torch.nn.Module):
         orthogonal_projection: bool = False,
         right_handed_system: bool = False,
         # pyre-fixme[16]: Module `_C` has no attribute `EPS`.
-        background_normalized_depth: float = _C.EPS,
+        background_normalized_depth: float = _C.EPS if _C is not None else 1e-8,
         n_channels: int = 3,
         n_track: int = 5,
     ) -> None:
@@ -546,7 +549,7 @@ class Renderer(torch.nn.Module):
         opacity: Optional[torch.Tensor] = None,
         percent_allowed_difference: float = 0.01,
         # pyre-fixme[16]: Module `_C` has no attribute `MAX_UINT`.
-        max_n_hits: int = _C.MAX_UINT,
+        max_n_hits: int = _C.MAX_UINT if _C is not None else 2147483647,
         mode: int = 0,
         return_forward_info: bool = False,
         first_R_then_T: bool = False,

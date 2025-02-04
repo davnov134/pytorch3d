@@ -9,7 +9,11 @@
 from typing import NamedTuple, Sequence, Union
 
 import torch
-from pytorch3d import _C
+try:
+    from pytorch3d import _C
+except ImportError:
+    _C = None
+
 from pytorch3d.common.datatypes import Device
 
 # Example functions for blending the top K colors per pixel using the outputs

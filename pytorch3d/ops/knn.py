@@ -10,7 +10,10 @@ from collections import namedtuple
 from typing import Union
 
 import torch
-from pytorch3d import _C
+try:
+    from pytorch3d import _C
+except ImportError:
+    _C = None
 from torch.autograd import Function
 from torch.autograd.function import once_differentiable
 

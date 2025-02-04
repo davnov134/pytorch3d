@@ -11,7 +11,10 @@ from typing import List, Optional, Tuple, Union
 
 import numpy as np
 import torch
-from pytorch3d import _C
+try:
+    from pytorch3d import _C
+except ImportError:
+    _C = None
 
 from ..utils import parse_image_size
 
